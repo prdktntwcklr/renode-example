@@ -40,7 +40,6 @@ jobs:
           path: nucleo-f446re/ButtonLed/build
       - name: run tests
         uses: docker://antmicro/renode:latest
-        options: --user root
         with:
           args: >
             /bin/bash -c "
