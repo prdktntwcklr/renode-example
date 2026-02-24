@@ -17,9 +17,7 @@ jobs:
       - name: print toolchain version
         run:  arm-none-eabi-gcc --version
       - name: build project
-        run:  |
-          cd nucleo-f446re/ButtonLed
-          make
+        run:  make build
       - name: upload build files
         uses: actions/upload-artifact@v3
         with:
@@ -47,7 +45,7 @@ jobs:
           name: BuildFiles
           path: nucleo-f446re/ButtonLed/build
       - name: run tests
-        run:  renode-test tests/test-button.robot
+        run:  make test
       - name: upload results
         uses: actions/upload-artifact@v3
         with:
