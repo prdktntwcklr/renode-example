@@ -15,12 +15,13 @@ jobs:
       - name: build project
         uses: docker://stronglytyped/arm-none-eabi-gcc:latest
         with:
-          args: arm-none-eabi-gcc --version && make build
+          args: /bin/sh -c "arm-none-eabi-gcc --version && make build"
       - name: upload build files
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: BuildFiles
           retention-days: 1
+          if-no-files-found: error
           path: |
             nucleo-f446re/ButtonLed/build/ButtonLed.elf
             nucleo-f446re/ButtonLed/build/ButtonLed.hex
