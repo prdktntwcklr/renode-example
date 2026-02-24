@@ -29,24 +29,22 @@ jobs:
     name: Run Robot tests
     needs: build-project
     runs-on: ubuntu-latest
+    container:
+      image: antmicro/renode:latest
+      options: --user root
     timeout-minutes: 5
     steps:
       - name: checkout code
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: print renode version
+        run:  renode --version
       - name: download build files
         uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
         with:
           name: BuildFiles
           path: nucleo-f446re/ButtonLed/build
       - name: run tests
-        uses: docker://antmicro/renode:latest
-        with:
-          args: >
-            /bin/bash -c "
-            apt-get update && apt-get install -y make &&
-            renode --version && 
-            make test
-            "
+        run:  renode-test tests/test-button.robot
       - name: upload results
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
