@@ -25,8 +25,7 @@ provided `Dockerfile` together with the
 for VS Code), you can build the project by running:
 
 ```bash
-cd nucleo-f446re/ButtonLed
-make
+make build
 ```
 
 This should create the compiled binaries under the
@@ -38,7 +37,7 @@ After building the binaries, run the following command from the main directory
 to test for the expected behavior:
 
 ```bash
-renode-test tests/test-button.robot
+make test
 ```
 
 Sample output from GitHub Actions after the test has run successfully:

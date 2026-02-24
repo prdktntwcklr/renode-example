@@ -7,7 +7,8 @@
     ],
     "containerEnv": {
         "WORKSPACE_DIR": "${containerWorkspaceFolder}",
-        "PROMPT_COMMAND": "history -a"
+        "PROMPT_COMMAND": "history -a",
+        "EDITOR": "code --wait"
     },
     "customizations": {
         "vscode": {
@@ -18,5 +19,6 @@
                 "terminal.integrated.defaultProfile.linux": "bash"
             }
         }
-    }
+    },
+    "remoteUser": "root",
 }

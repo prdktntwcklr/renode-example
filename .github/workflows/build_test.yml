@@ -8,23 +8,20 @@ jobs:
   build-project:
     name: Build Project
     runs-on: ubuntu-latest
-    container:
-      image: stronglytyped/arm-none-eabi-gcc:latest
     timeout-minutes: 5
     steps:
       - name: checkout code
-        uses: actions/checkout@v3
-      - name: print toolchain version
-        run:  arm-none-eabi-gcc --version
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: build project
-        run:  |
-          cd nucleo-f446re/ButtonLed
-          make
+        uses: docker://stronglytyped/arm-none-eabi-gcc:latest
+        with:
+          args: /bin/sh -c "arm-none-eabi-gcc --version && make build"
       - name: upload build files
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: BuildFiles
           retention-days: 1
+          if-no-files-found: error
           path: |
             nucleo-f446re/ButtonLed/build/ButtonLed.elf
             nucleo-f446re/ButtonLed/build/ButtonLed.hex
@@ -38,18 +35,18 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: print renode version
         run:  renode --version
       - name: download build files
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
         with:
           name: BuildFiles
           path: nucleo-f446re/ButtonLed/build
       - name: run tests
         run:  renode-test tests/test-button.robot
       - name: upload results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: TestResults
           retention-days: 1
